@@ -1,0 +1,44 @@
+---
+title: "Introduction to Dictionaries in Python"
+author: "Peter von Rohr"
+date: "2018-07-01"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+vec_pkg <- c("reticulate", "dplyr", "nycflights13")
+vec_inst_pkg <- installed.packages()
+for (p in vec_pkg)
+  if (!p %in% vec_inst_pkg) 
+    install.packages(pkgs = p, repos = "https://cran.rstudio.com")
+# package reticulate for python
+library(reticulate)
+use_python("/usr/local/bin/python")
+# engine settings
+knitr::knit_engines$set(python = reticulate::eng_python)
+```
+
+
+## Simple Examples
+First, the examples of https://rstudio.github.io/reticulate/articles/r_markdown.html are replicated. These examples are based on the `nycflights` dataset.
+
+```{r}
+library(dplyr)
+library(nycflights13)
+flights
+```
+
+In order to have this dataset available in python, we store this dataset in a csv-file.
+
+```{r}
+readr::write_csv(flights, path = "flights.csv")
+```
+
+This data set is read into python
+
+```{python}
+import pandas
+flights = pandas.read_csv("flights.csv")
+```
+
+
